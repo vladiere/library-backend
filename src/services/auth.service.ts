@@ -8,7 +8,7 @@ import logger from "../config/logger";
 import IUser from "../models/userResultModel";
 import { executeQuery } from "../functions/executeQuery";
 
-const getDefualt = async (req: Request, res: Response) => {
+const getDefault = async (req: Request, res: Response) => {
   try {
     const query = 'INSERT INTO get_default(?)'
     const currentDate = new Date();
@@ -176,5 +176,5 @@ export default {
   loginLibrarian,
   logoutLibrarian,
   changeUserPassword,
-getDefualt
+getDefault
 };
