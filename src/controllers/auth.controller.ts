@@ -6,7 +6,6 @@ import logger from "../config/logger";
 const registerLibrarian = async (req: Request, res: Response) => {
   try {
     const librarian: ILibrarian = req.body;
-    console.log(librarian);
     const result = await authService.registerLibrarian(librarian);
     return res.status(201).json(result);
   } catch (error: any) {
