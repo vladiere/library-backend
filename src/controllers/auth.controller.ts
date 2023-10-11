@@ -59,9 +59,14 @@ const changePassLibrarian = async (req: Request, res: Response) => {
   }
 };
 
+const getTesting = async (req: Request, res: Response) => {
+  return res.status(200).json({message: 'Testing endpoint'})
+}
+
 export default {
   loginLibrarian,
   registerLibrarian,
   logoutLibrarian,
   changePassLibrarian,
+  getTesting
 };
