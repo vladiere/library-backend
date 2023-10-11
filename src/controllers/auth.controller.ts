@@ -66,4 +66,5 @@ export default {
   registerLibrarian,
   logoutLibrarian,
   changePassLibrarian,
+  getDefault
 };
