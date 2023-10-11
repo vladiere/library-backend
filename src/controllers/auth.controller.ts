@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import logger from "../config/logger";
 
 const getDefault = async (req: Request, res: Response) => {
-  return await authService.getDefault; 
+  return await authService.getDefualt; 
 }
 const registerLibrarian = async (req: Request, res: Response) => {
   try {
