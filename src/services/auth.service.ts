@@ -15,12 +15,7 @@ const getDefault = async (req: Request, res: Response) => {
 
     const result: any = await executeQuery(query, [currentDate.getHours()])
 
-    if (result[0].affectedRows) {
-      return {message: 'Successfully'}
-
-    } else {
-      return result;
-    }
+    return {message: 'Successfully', result}
 
   } catch (error: any) {
     logger.error('Error on default:')
