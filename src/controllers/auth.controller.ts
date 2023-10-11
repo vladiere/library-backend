@@ -3,17 +3,6 @@ import ILibrarian from "../models/userModel";
 import authService from "../services/auth.service";
 import logger from "../config/logger";
 
-const getDefault = async (req: Request, res: Response) => {
-  try {
-      const result = await authService.getDefault; 
-
-      return res.status(200).json(result)
-  } catch (error: any) {
-    logger.error('Error on default')
-    console.log(error)
-    return res.status(500).json(error)
-  }
-}
 const registerLibrarian = async (req: Request, res: Response) => {
   try {
     const librarian: ILibrarian = req.body;
@@ -74,5 +63,4 @@ export default {
   registerLibrarian,
   logoutLibrarian,
   changePassLibrarian,
-  getDefault
 };

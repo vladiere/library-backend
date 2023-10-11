@@ -12,7 +12,7 @@ const params = {
 // Setting up the database connection
 const Connect = async () =>
   new Promise<mysql.Connection>((resolve, reject) => {
-    const connection = mysql.createConnection(params);
+    const connection = mysql.createConnection(config.mysqlurl);
 
     connection.connect((error) => {
       if (error) {

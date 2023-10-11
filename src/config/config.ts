@@ -27,6 +27,8 @@ const SERVER_SECRET_KEY =
 const SERVER_REFRESH_SECRET_KEY =
   process.env.SERVER_REFRESH_SECRET_KEY || "CPClibraryRefreshSecretKey";
 
+const MYSQL_URL = `mysql://${MYSQL_USER}:${MYSQL_PASS}@${MYSQL_HOST}:${SERVER_PORT}/MYSQLDATABASE`
+
 const SERVER = {
   hostname: SERVER_HOST,
   port: SERVER_PORT,
@@ -43,6 +45,7 @@ const config = {
   mysql: MYSQL,
   server: SERVER,
   imgDir: path.join(__dirname, "../public/images"),
+  mysqlurl: MYSQL_URL
 };
 
 export default config;

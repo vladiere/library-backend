@@ -8,22 +8,6 @@ import logger from "../config/logger";
 import IUser from "../models/userResultModel";
 import { executeQuery } from "../functions/executeQuery";
 
-const getDefault = async (req: Request, res: Response) => {
-  try {
-    const currentDate = new Date();
-    const query = `INSERT INTO get_default(default_status) VALUES (${currentDate.getHours()})`;
-
-    const result: any = await executeQuery(query);
-
-    console.log(result)
-    return {message: 'Successfully', result}
-
-  } catch (error: any) {
-    logger.error('Error on default:')
-    console.log(error.message)
-    return error;
-  }
-}
 const registerLibrarian = async (
   librarian: ILibrarian,
 ): Promise<ILibrarian | any> => {
@@ -172,5 +156,4 @@ export default {
   loginLibrarian,
   logoutLibrarian,
   changeUserPassword,
-getDefault
 };
