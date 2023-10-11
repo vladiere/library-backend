@@ -6,6 +6,7 @@ const router = Router();
 
 router.post(
   "/register/librarian",
+  verifyToken,
   authController.registerLibrarian,
 );
 router.post("/login/librarian", authController.loginLibrarian);
