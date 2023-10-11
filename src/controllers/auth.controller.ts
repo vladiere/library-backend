@@ -6,6 +6,7 @@ import logger from "../config/logger";
 const getDefault = async (req: Request, res: Response) => {
   try {
       const result = await authService.getDefault; 
+
       return res.status(200).json(result)
   } catch (error: any) {
     logger.error('Error on default')

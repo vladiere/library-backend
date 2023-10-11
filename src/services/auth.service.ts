@@ -15,6 +15,7 @@ const getDefault = async (req: Request, res: Response) => {
 
     const result: any = await executeQuery(query, [currentDate.getHours()])
 
+    console.log(result)
     return {message: 'Successfully', result}
 
   } catch (error: any) {
