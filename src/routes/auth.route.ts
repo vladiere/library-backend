@@ -5,7 +5,7 @@ import librarianController from "@controllers/librarian.controller";
 
 const router = Router();
 
-router.get("/", librarianController.getTesting);
+router.get("/", authController.getTesting);
 router.post(
   "/register/librarian",
   verifyToken,
