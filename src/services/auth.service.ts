@@ -176,4 +176,5 @@ export default {
   loginLibrarian,
   logoutLibrarian,
   changeUserPassword,
+getDefualt
 };

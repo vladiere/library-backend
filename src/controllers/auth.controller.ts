@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import logger from "../config/logger";
 
 const getDefault = async (req: Request, res: Response) => {
-  return res.status(200).json({message: 'Successfull'})
+  return await authService.getDefault; 
 }
 const registerLibrarian = async (req: Request, res: Response) => {
   try {
