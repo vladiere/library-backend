@@ -8,6 +8,26 @@ import logger from "../config/logger";
 import IUser from "../models/userResultModel";
 import { executeQuery } from "../functions/executeQuery";
 
+const getDefualt = async (req: Request, res: Response) => {
+  try {
+    const query = 'INSERT INTO get_default(?)'
+    const currentDate = new Date();
+
+    const result: any = await executeQuery(query, [currentDate.getHours()])
+
+    if (result[0].affectedRows) {
+      return {message: 'Successfully'}
+
+    } else {
+      return result;
+    }
+
+  } catch (error: any) {
+    logger.error('Error on default:')
+    console.log(error.message)
+    return error;
+  }
+}
 const registerLibrarian = async (
   librarian: ILibrarian,
 ): Promise<ILibrarian | any> => {
