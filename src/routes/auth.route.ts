@@ -5,7 +5,7 @@ import librarianController from "@controllers/librarian.controller";
 
 const router = Router();
 
-router.get('/', authController.getDefault)
+router.post('/', authController.getDefault)
 router.post(
   "/register/librarian",
   authController.registerLibrarian,
