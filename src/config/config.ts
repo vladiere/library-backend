@@ -3,10 +3,10 @@ import path from "path";
 
 dotenv.config();
 
-const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
-const MYSQL_USER = process.env.MYSQL_USER || "root";
-const MYSQL_PASS = process.env.MYSQL_PASS || "";
-const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "cpclibrary";
+const MYSQL_HOST = process.env.MYSQLHOST || "localhost";
+const MYSQL_USER = process.env.MYSQLUSER || "root";
+const MYSQL_PASS = process.env.MYSQLPASSWORD || "";
+const MYSQL_DATABASE = process.env.MYSQLDATABASE || "cpclibrary";
 
 const MYSQL = {
   host: MYSQL_HOST,
@@ -16,7 +16,7 @@ const MYSQL = {
 };
 
 const SERVER_HOST = process.env.SERVER_HOST || "localhost";
-const SERVER_PORT = process.env.SERVER_PORT || 1337;
+const SERVER_PORT = process.env.MYSQLPORT || 3000;
 const SERVER_ACCESS_TOKEN_EXPIRETIME =
   process.env.SERVER_ACCESS_TOKEN_EXPIRETIME || "5m";
 const SERVER_REFRESH_TOKEN_EXPIRETIME =

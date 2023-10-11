@@ -4,11 +4,9 @@
   "description": "Backend for the cpc library system",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
+    "start:dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "build": "rm -rf dist/ && tsc",
-    "start": "npm run build && node dist/src/index.js",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "start": "npm run build && node dist/src/index.js"
   },
   "repository": {
     "type": "git",
