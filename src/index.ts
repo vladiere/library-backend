@@ -12,7 +12,7 @@ import librarianRoute from "./routes/librarian.route";
 import refreshTokenRoute from "./routes/refreshToken.route";
 
 const app: Express = express();
-const PORT: number = Number(process.env.SERVER_PORT) || 3000;
+const PORT: number = Number(process.env.PORT) || 3000;
 
 // Logging
 app.use(morgan("dev"));

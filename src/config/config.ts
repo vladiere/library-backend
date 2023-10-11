@@ -15,7 +15,7 @@ const MYSQL = {
   pass: MYSQL_PASS,
 };
 
-const SERVER_HOST = process.env.SERVER_HOST || "localhost";
+const SERVER_HOST = process.env.HOST || "localhost";
 const SERVER_PORT = process.env.MYSQLPORT || 3000;
 const SERVER_ACCESS_TOKEN_EXPIRETIME =
   process.env.SERVER_ACCESS_TOKEN_EXPIRETIME || "5m";
