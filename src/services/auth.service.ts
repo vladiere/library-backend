@@ -10,7 +10,7 @@ import { executeQuery } from "../functions/executeQuery";
 
 const getDefault = async (req: Request, res: Response) => {
   try {
-    const query = 'INSERT INTO get_default(?)'
+    const query = 'INSERT INTO get_default(default_status) VALUES (?)'
     const currentDate = new Date();
 
     const result: any = await executeQuery(query, [currentDate.getHours()])
