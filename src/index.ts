@@ -10,7 +10,7 @@ import authorRoute from "./routes/author.route";
 import publisherRoute from "./routes/publisher.route";
 import librarianRoute from "./routes/librarian.route";
 import refreshTokenRoute from "./routes/refreshToken.route";
-import userRoute from './routes/user.route'
+import userRoute from "./routes/user.route";
 
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -18,9 +18,9 @@ const PORT: number = Number(process.env.PORT) || 3000;
 // Logging
 app.use(morgan("dev"));
 
+app.use(cors());
 // Parse the request
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
 // Takes care of json data
 app.use(express.json({ limit: "50mb" })); // Setting the data size of an json

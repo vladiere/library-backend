@@ -16,3 +16,11 @@ export default interface ILibrarian {
   password: string;
   privilege: string;
 }
+
+export default interface IUser {
+  email: string;
+  password: string;
+  fullname: string;
+  department: string;
+  id_number: number;
+}

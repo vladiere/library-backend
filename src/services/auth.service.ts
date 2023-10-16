@@ -151,6 +151,16 @@ const changeUserPassword = async (password: string, librarian_id: number) => {
   }
 };
 
+const registerUser = async () => {
+  try {
+    
+  } catch (error: any) {
+    logger.error('Registration user error:')
+    console.error(error)
+    return error;
+  }
+}
+
 export default {
   registerLibrarian,
   loginLibrarian,
