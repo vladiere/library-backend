@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Setting the cors policy
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:9300, https://cpclibrary.online");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
