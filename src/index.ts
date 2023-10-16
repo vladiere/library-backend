@@ -18,7 +18,7 @@ const PORT: number = Number(process.env.PORT) || 3000;
 // Logging
 app.use(morgan("dev"));
 
-app.use(cors());
+app.use(cors({ origin: '*'}));
 // Parse the request
 app.use(express.urlencoded({ extended: false }));
 
