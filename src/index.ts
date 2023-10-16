@@ -1,4 +1,3 @@
-import cors from "cors";
 import path from "path";
 import morgan from "morgan";
 import logger from "./config/logger";
@@ -20,7 +19,6 @@ app.use(morgan("dev"));
 
 // Parse the request
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
 // Takes care of json data
 app.use(express.json({ limit: "50mb" })); // Setting the data size of an json
@@ -30,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Setting the cors policy
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:9300");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
