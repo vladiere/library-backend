@@ -5,22 +5,22 @@ import IUser from "src/models/userResultModel";
 import { executeQuery } from "./executeQuery";
 
 const signedJWT = (
-  user: IUser,
+  user: any,
   callback: (
     error: Error | null,
     accessToken: string | null,
     refreshToken: string | null,
   ) => void,
 ): void => {
-  logger.info(`Attempting to sign tokens for ${user[0].username}`);
+  logger.info(`Attempting to sign tokens for ${user[0].username || user[0].email_address}`);
 
   try {
     // Create the access token
     jwt.sign(
       {
-        username: user[0].username,
-        user_id: user[0].librarian_id,
-        privilege: user[0].privilege,
+        username: user[0].username || user[0].email_address,
+        user_id: user[0].librarian_id || user[0].user_id,
+        privilege: user[0]?.privilege,
       },
       config.server.token.accessSecret,
       {
@@ -35,9 +35,9 @@ const signedJWT = (
           // Create the refresh token
           jwt.sign(
             {
-              username: user[0].username,
-              user_id: user[0].librarian_id,
-              privilege: user[0].privilege,
+              username: user[0].username || user[0].email_address,
+              user_id: user[0].librarian_id || user[0].user_id,
+              privilege: user[0]?.privilege,
             },
             config.server.token.refreshSecret,
             {
@@ -50,7 +50,7 @@ const signedJWT = (
               } else if (refreshToken) {
                 // Insert the refresh token into the database
                 await executeQuery(
-                  `INSERT INTO refresh_token (username, refresh_token) VALUES('${user[0].username}','${refreshToken}')`,
+                  `INSERT INTO refresh_token (username, refresh_token) VALUES('${user[0].username || user[0].email_address}','${refreshToken}')`,
                 );
                 callback(null, accessToken, refreshToken);
               }

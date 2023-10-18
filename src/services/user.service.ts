@@ -3,7 +3,8 @@ import logger from "../config/logger";
 import { executeQuery } from "../functions/executeQuery";
 import IUser from "../models/userModel";
 import bcryptjs from "bcryptjs";
-import signedJWT from "@functions/signedJWT";
+import signedJWT from "../functions/signedJWT";
+import LoginUser from "../functions/loginUser";
 
 const registerUser = async (user_data: IUser) => {
   try {
@@ -17,7 +18,7 @@ const registerUser = async (user_data: IUser) => {
       user_data.email,
       hash,
     ]);
-    console.log(result)
+    console.log(result);
     return result[0];
   } catch (error: any) {
     logger.error("User registration Error:");
@@ -26,79 +27,93 @@ const registerUser = async (user_data: IUser) => {
   }
 };
 
-// const loginUser = async (
-//   username: string,
-//   password: string,
-// ): Promise<string | any> => {
-//   let query = "CALL AccessLibrarianLogin(?);";
-//
-//   try {
-//     const connection = await Connect();
-//     const users: any = await Query<IUser[]>(connection, query, [username]);
-//     connection.end();
-//
-//     if (users[0][0].status === 404) {
-//       // Reject the Promise with an error message
-//       throw new Error(users[0][0].message);
-//     }
-//
-//     const result = await new Promise((resolve, reject) => {
-//       bcryptjs.compare(password, users[0][0].password, (error, result) => {
-//         if (error) {
-//           logger.error(error);
-//           // Reject the Promise with an error object
-//           reject({
-//             message: error.message,
-//             error,
-//             status: 500,
-//           });
-//         } else if (result) {
-//           signedJWT(users[0], (_error, accessToken, refreshToken) => {
-//             if (_error) {
-//               LoginLibrarian(username, "login unable");
-//               // Reject the Promise with an error object
-//               reject({
-//                 message: "Unable to SIGN Token",
-//                 error: _error,
-//                 status: 401,
-//               });
-//             } else if (accessToken && refreshToken) {
-//               LoginLibrarian(username, "Success");
-//
-//               // Resolve the Promise with the desired value
-//               resolve({
-//                 librarian_id: users[0][0].librarian_id,
-//                 privilege: users[0][0].privilege,
-//                 accessToken,
-//                 refreshToken,
-//               });
-//             }
-//           });
-//         } else {
-//           LoginLibrarian(username, "Failed");
-//           // Reject the Promise with an error object
-//           reject({
-//             message: "Login failed wrong password",
-//             status: 500,
-//           });
-//         }
-//       });
-//     });
-//
-//     return result; // Resolve the Promise with the result
-//   } catch (error: any) {
-//     logger.error("Connection Error");
-//     console.error(error);
-//     // Reject the Promise with an error object
-//     throw {
-//       message: error.message,
-//       error,
-//       status: 500,
-//     };
-//   }
-// };
+const loginUser = async (
+  email_address: string,
+  password: string,
+): Promise<string | any> => {
+  let query = "CALL AccessLoginUser(?);";
 
-const logoutLibrarian = async (refresh_token: string) => {
+  try {
+    const connection = await Connect();
+    const users: any = await Query<IUser[]>(connection, query, [email_address]);
+    connection.end();
+
+    if (users[0][0].status === 404) {
+      // Reject the Promise with an error message
+      throw new Error(users[0][0].message);
+    }
+
+    const result = await new Promise((resolve, reject) => {
+      bcryptjs.compare(password, users[0][0].password, (error, result) => {
+        if (error) {
+          logger.error(error);
+          // Reject the Promise with an error object
+          reject({
+            message: error.message,
+            error,
+            status: 500,
+          });
+        } else if (result) {
+          signedJWT(users[0], (_error, accessToken, refreshToken) => {
+            if (_error) {
+              LoginUser(email_address, "login unable");
+              // Reject the Promise with an error object
+              reject({
+                message: "Unable to SIGN Token",
+                error: _error,
+                status: 401,
+              });
+            } else if (accessToken && refreshToken) {
+              LoginUser(email_address, "Success");
+
+              // Resolve the Promise with the desired value
+              resolve({
+                user_id: users[0][0].user_id,
+                privilege: users[0][0]?.privilege,
+                accessToken,
+                refreshToken,
+              });
+            }
+          });
+        } else {
+          LoginUser(email_address, "Failed");
+          // Reject the Promise with an error object
+          reject({
+            message: "Login failed wrong password",
+            status: 500,
+          });
+        }
+      });
+    });
+
+    return result; // Resolve the Promise with the result
+  } catch (error: any) {
+    logger.error("Connection Error");
+    console.error(error);
+    // Reject the Promise with an error object
+    throw {
+      message: error.message,
+      error,
+      status: 500,
+    };
+  }
+};
+
+const getUser = async (user_id: number) => {
+  try {
+    const query = "SELECT * FROM user_details WHERE user_id = ?";
+
+    const result = await executeQuery(query, [user_id]);
+
+    return result;
+  } catch (error: any) {
+    logger.error("Getting user details error at service");
+    console.error(error);
+    return error;
+  }
+};
+
+const logoutUser = async (refresh_token: string) => {
   try {
     const query = "DELETE FROM refresh_token WHERE refresh_token = ?";
 
@@ -114,8 +129,12 @@ const logoutLibrarian = async (refresh_token: string) => {
     console.error(error);
     throw new Error(error);
   }
-}
+};
 
 export default {
   registerUser,
-}
+  loginUser,
+  logoutUser,
+  getUser,
+
+};
