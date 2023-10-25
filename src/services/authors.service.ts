@@ -36,7 +36,22 @@ const getSingleAuthorRecord = async (author_id: number) => {
   }
 };
 
+const getAuthorBooks = async (author_name: string) => {
+  try {
+    const query = 'SELECT * FROM book_inventory WHERE author_name = ?;';
+
+    const result = await executeQuery(query, [author_name])
+
+    return result;
+  } catch (error) {
+    logger.error('Getting author books error at service');
+    console.error(error);
+    return error;
+  }
+}
+
 export default {
   getAllAuthorRecords,
   getSingleAuthorRecord,
+  getAuthorBooks,
 };

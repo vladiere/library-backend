@@ -26,7 +26,7 @@ router.post("/add/book/record", verifyToken, bookController.singleAddRecord);
 // Get book/s
 router.get("/get/all/books", verifyToken, bookController.getAllBooksRecord);
 // get all books inventory
-router.get(
+router.post(
   "/get/all/books/inventory",
   verifyToken,
   bookController.getAllBookInventory,

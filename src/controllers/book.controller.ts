@@ -62,7 +62,19 @@ const getAllBooksRecord = async (req: Request, res: Response) => {
 
 const getAllBookInventory = async (req: Request, res: Response) => {
   try {
-    const result = await bookService.getAllBookInventory();
+    type RequestInventoryBody = {
+      limit: number;
+      book_id?: number;
+    };
+    let result: any;
+
+    const body: RequestInventoryBody = req.body;
+
+    if (body.book_id) {
+      result = await bookService.getAllBookInventory(body.limit, body.book_id);
+    } else {
+      result = await bookService.getAllBookInventory(body.limit);
+    }
 
     return res.status(200).json(result);
   } catch (error: any) {

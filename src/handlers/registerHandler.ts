@@ -10,6 +10,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       console.error("No image selected.");
       return res.status(404).json({ message: "No image found" });
     }
+    const role = req.body.role;
 
     // Read the uploaded image from the request
     const userIdImageBuffer = req.file.filename;
@@ -91,7 +92,6 @@ const handleImagesComparison = async (req: Request, res: Response) => {
         "6170",
         "COL",
         "LEGE",
-        "STUDENT",
         "NAME",
         "STUDENT NAME",
         "ID",
@@ -101,7 +101,6 @@ const handleImagesComparison = async (req: Request, res: Response) => {
         "NUMBER",
         "SIGNATURE",
         "DEPARTMENT",
-        "INSTRUCTOR",
         "FOUNDED",
         "2005",
         "2008",
@@ -124,31 +123,17 @@ const handleImagesComparison = async (req: Request, res: Response) => {
           filteredArray.push(alphanumericMatch);
         }
       });
-
-      console.log(
-        "id number",
-        filteredArray.indexOf(idNumbers && idNumbers[0]),
-      );
       const indexIdNumber = filteredArray.indexOf(idNumbers && idNumbers[0]);
-      console.log(
-        "department",
-        filteredArray.indexOf(
-          departments && departments[departments.length - 1],
-        ),
-      );
       const indexDepartment = filteredArray.indexOf(
         departments && departments[departments.length - 1],
       );
-      console.log(extractedInfo);
-      console.log(filteredArray);
-      console.log("ID Numbers:", idNumbers);
-      console.log("Departments:", departments);
+      const roleIndex = filteredArray.indexOf(role.toUpperCase());
       const valueFromDepartmentToIdNumber = filteredArray.slice(
         indexDepartment,
         indexIdNumber,
       );
       const sortOrder = (value: string) => {
-        // Check if the value is a department (e.g., IT, BEED, BSHM, BSED)
+        // Check if the value is a department (e.g., IT, EDUCATION, HM, BEED, BSHM, BSED)
         if (departmentRegex.test(value)) {
           return -1; // Move departments to the beginning
         } else if (idNumberRegex.test(value)) {
@@ -160,13 +145,29 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       valueFromDepartmentToIdNumber.sort(
         (a: any, b: any) => sortOrder(a) - sortOrder(b),
       );
-      console.log(valueFromDepartmentToIdNumber);
-      return res
-        .status(200)
-        .json({ status: 200, valueFromDepartmentToIdNumber });
+      if (roleIndex !== -1) {
+
+        if (role.toUpperCase() === 'STUDENT') { 
+          const studentIndex = valueFromDepartmentToIdNumber.indexOf(role.toUpperCase())
+          valueFromDepartmentToIdNumber.splice(studentIndex,1);
+          return res
+            .status(200)
+            .json({ status: 200, valueFromDepartmentToIdNumber });  
+        } else if (role.toUpperCase() === 'INSTRUCTOR') {
+          filteredArray.sort((a: string, b: string) => sortOrder(a) - sortOrder(b));
+          filteredArray.splice(roleIndex,1);
+          return res
+            .status(200)
+            .json({ status: 200, valueFromDepartmentToIdNumber: filteredArray });
+        } else {
+          return res.status(500).json({ message: 'Choose correct role' });
+        }
+      } else {
+        return res.status(404).json({message: 'Invalid ID or Select your role'})
+      }
     } else {
       console.log("No text detected in the user ID image.");
-      return res.status(200).json({ status: 400, message: "Invalid ID image" });
+      return res.status(400).json({  message: "Invalid ID image" });
     }
   } catch (error) {
     logger.error("Image compare error:", error);

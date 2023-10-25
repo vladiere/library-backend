@@ -23,4 +23,5 @@ export default interface IUser {
   fullname: string;
   department: string;
   id_number: number;
+  role: string;
 }

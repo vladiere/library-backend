@@ -16,5 +16,6 @@ router.post(
   verifyToken,
   authorController.getSingleAuthorRecord,
 );
+router.post("/get/books/author", verifyToken, authorController.getAuthorBooks);
 
 export = router;

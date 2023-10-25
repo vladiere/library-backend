@@ -57,9 +57,25 @@ const logoutUser = async (req: Request, res: Response) => {
   }
 };
 
+const changeUserPass = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const result = await userService.changeUserPass(email, password);
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error('Changing password error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
+
 export default {
   registerUser,
   loginUser,
   logoutUser,
   getUser,
+  changeUserPass,
 };

@@ -90,9 +90,19 @@ const getAllBooksRecord = async () => {
   }
 };
 
-const getAllBookInventory = async () => {
+const getAllBookInventory = async (limit: number, book_id?: number) => {
   try {
-    const query = "SELECT * FROM book_inventory;";
+    let query = "";
+
+    if (limit === 0) {
+      query = "SELECT * FROM book_inventory;";
+    } else {
+      query = `SELECT * FROM book_inventory LIMIT ${limit};`;
+    }
+
+    if (book_id) {
+      query = `SELECT * FROM book_inventory WHERE book_id = ${book_id};`;
+    }
 
     const result = await executeQuery(query);
 
@@ -107,9 +117,9 @@ const getAllBookInventory = async () => {
   }
 };
 
-const getSingleBookRecord = async (book_id: any) => {
+const getSingleBookRecord = async (book_id: number) => {
   try {
-    const query = `SELECT * FROM book_info WHERE book_id = ?;`;
+    const query = `SELECT * FROM book_info WHERE book_id = ? LIMIT 1;`;
 
     const result = await executeQuery(query, [book_id]);
 
@@ -124,34 +134,13 @@ const getSingleBookRecord = async (book_id: any) => {
   }
 };
 
-const manageBookCopies = async (option: string, copies: any, book_id: any) => {
+const manageBookCopies = async (option: string, copies: number, book_id: number) => {
   try {
-    let query = "";
-    let values = [];
+    const query = "CALL ManageBookCopies(?,?,?)";
+    
+    const result = await executeQuery(query, [option, copies, book_id]);
 
-    if (option === "add") {
-      query = `UPDATE volumes SET copies = copies + ? , borrowed_copies = borrowed_copies + ? WHERE book_id = ?;`;
-      values = [copies, copies, book_id];
-    } else if (option === "borrow") {
-      query = `UPDATE volumes SET borrowed_copies = borrowed_copies - ? WHERE book_id = ?;`;
-      values = [copies, book_id];
-    } else if (option === "lost") {
-      query = `UPDATE volumes SET copies = copies - ? WHERE book_id = ?;`;
-      values = [copies, book_id];
-    } else if (option === "return") {
-      query = `UPDATE volumes SET borrowed_copies = borrowed_copies + ? WHERE book_id = ?;`;
-      values = [copies, book_id];
-    } else {
-      return { message: "Invalid option" };
-    }
-
-    const result: any = await executeQuery(query, values);
-
-    if (result.affectedRows === 1) {
-      return { message: "Success" };
-    } else {
-      return result;
-    }
+    return result;
   } catch (error: any) {
     logger.error("Updating books copies Error : ");
     console.error(error.message, error);

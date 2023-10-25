@@ -8,7 +8,7 @@ import LoginUser from "../functions/loginUser";
 
 const registerUser = async (user_data: IUser) => {
   try {
-    const query = "CALL RegisterUser(?,?,?,?,?)";
+    const query = "CALL RegisterUser(?,?,?,?,?,?)";
 
     const hash = await bcryptjs.hash(user_data.password, 10);
     const result: any = await executeQuery(query, [
@@ -16,6 +16,7 @@ const registerUser = async (user_data: IUser) => {
       user_data.fullname,
       user_data.department,
       user_data.email,
+      user_data.role,
       hash,
     ]);
     console.log(result);
@@ -101,7 +102,13 @@ const loginUser = async (
 
 const getUser = async (user_id: number) => {
   try {
-    const query = "SELECT * FROM user_details WHERE user_id = ?";
+    let query = "";
+
+    if (user_id == 0) {
+      query = "SELECT * FROM user_details WHERE user_id";
+    } else {
+      query = "SELECT * FROM user_details WHERE user_id = ?";
+    }
 
     const result = await executeQuery(query, [user_id]);
 
@@ -115,19 +122,36 @@ const getUser = async (user_id: number) => {
 
 const logoutUser = async (refresh_token: string) => {
   try {
-    const query = "DELETE FROM refresh_token WHERE refresh_token = ?";
+    const query = "CALL LogoutUser(?)";
 
     const result: any = await executeQuery(query, [refresh_token]);
 
-    if (result.affectedRows === 1) {
-      return { message: "Logout Successfully" };
-    } else {
-      return result;
-    }
+    return result[1]
   } catch (error: any) {
     logger.error("Logging out Librarian Error:");
     console.error(error);
     throw new Error(error);
+  }
+};
+
+const changeUserPass = async (email: string, password: string) => {
+  try {
+    if (email !== "" && password !== "") {
+      const query = "CALL ChangeUserPass(?,?);";
+      const hash = await bcryptjs.hash(password, 10);
+      const result = await executeQuery(query, [email, hash]);
+
+      return result;
+    } else {
+      return {
+        message: "Empty value",
+        status: 500,
+      };
+    }
+  } catch (error: any) {
+    logger.error("Changing password error at service:");
+    console.error(error);
+    return error;
   }
 };
 
@@ -136,5 +160,5 @@ export default {
   loginUser,
   logoutUser,
   getUser,
-
+  changeUserPass,
 };
