@@ -120,6 +120,19 @@ const getUser = async (user_id: number) => {
   }
 };
 
+const getActiveUser = async () => {
+  try {
+    const query = "SELECT COUNT(*) AS total_active FROM user_details WHERE user_status = ?";
+
+    const result: any = await executeQuery(query, ['active']);
+    return result[0];
+  } catch (error: any) {
+    logger.error('Getting active users error at service');
+    console.error(error);
+    return error;
+  }
+}
+
 const logoutUser = async (refresh_token: string) => {
   try {
     const query = "CALL LogoutUser(?)";
@@ -160,5 +173,6 @@ export default {
   loginUser,
   logoutUser,
   getUser,
+  getActiveUser,
   changeUserPass,
 };

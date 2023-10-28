@@ -41,7 +41,19 @@ const getUser = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json(error)
   }
-}
+};
+
+const getActiveUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getActiveUser();
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error('Getting active users error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+};
 
 const logoutUser = async (req: Request, res: Response) => {
   try {
@@ -77,5 +89,6 @@ export default {
   loginUser,
   logoutUser,
   getUser,
+  getActiveUser,
   changeUserPass,
 };
