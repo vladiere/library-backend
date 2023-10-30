@@ -126,29 +126,6 @@ const removeCollection = async (collection_id: number) => {
   }
 };
 
-const getLibrarianNotifications = async () => {
-  try {
-    const query = "SELECT * FROM notification_librarian";
-    const result = await executeQuery(query);
-    return result;
-  } catch (error: any) {
-    logger.error("Getting librarian notifications error at service");
-    console.error(error);
-    return error;
-  }
-};
-
-const clearAllLibrarianNotifications = async () => {
-  try {
-    const query = "CALL ClearLibrarianNotifications(?)";
-    const result: any = await executeQuery(query, [0]);
-    return result[0][0];
-  } catch (error: any) {
-    logger.error("Clearing all librarian notifications error at service");
-    console.error(error);
-    return error;
-  }
-};
 
 const getAllPendingTransactions = async (option: string) => {
   try {
@@ -172,7 +149,5 @@ export default {
   insertNewlistContent,
   insertCollection,
   removeCollection,
-  getLibrarianNotifications,
-  clearAllLibrarianNotifications,
   getAllPendingTransactions,
 };

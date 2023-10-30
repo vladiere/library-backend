@@ -1,3 +1,4 @@
+
 import { Connect, Query } from "../config/mysql";
 import logger from "../config/logger";
 import { executeQuery } from "../functions/executeQuery";
@@ -176,3 +177,4 @@ export default {
   getActiveUser,
   changeUserPass,
 };
+

@@ -110,27 +110,6 @@ const removeCollection = async (req: Request, res: Response) => {
   }
 };
 
-const getLibrarianNotifications = async (req: Request, res: Response) => {
-  try {
-    const result = await circulationService.getLibrarianNotifications();
-    return res.status(200).json(result);
-  } catch (error: any) {
-    logger.error('Getting librarian notifications error at controller');
-    console.error(error);
-    return res.status(500).json(error)
-  }
-};
-
-const clearAllLibrarianNotifications = async (req: Request, res: Response) => {
-  try {
-    const result = await circulationService.clearAllLibrarianNotifications();
-    return res.status(201).json(result);
-  } catch (error: any) {
-    logger.error('Clearing all librarian notifications error at controller');
-    console.error(error);
-    return res.status(500).json(error);
-  }
-};
 
 const getAllPendingTransactions = async (req: Request, res: Response) => {
   try {
@@ -154,7 +133,5 @@ export default {
   insertNewlistContent,
   insertCollection,
   removeCollection,
-  getLibrarianNotifications,
-  clearAllLibrarianNotifications,
   getAllPendingTransactions,
 }

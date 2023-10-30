@@ -18,9 +18,6 @@ router.post('list/add', verifyToken, circulationController.insertNewlistContent)
 router.post('/collection/insert', verifyToken, circulationController.insertCollection);
 router.post('/collection/remove', verifyToken, circulationController.removeCollection);
 
-// Notifications
-router.get('/notifications/librarian', verifyToken, circulationController.getLibrarianNotifications);
-router.get('/notifications/clear', verifyToken, circulationController.clearAllLibrarianNotifications);
 
 // Transactions
 router.post('/transactions/all', verifyToken, circulationController.getAllPendingTransactions);

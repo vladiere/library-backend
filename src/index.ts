@@ -13,6 +13,7 @@ import librarianRoute from "./routes/librarian.route";
 import refreshTokenRoute from "./routes/refreshToken.route";
 import userRoute from "./routes/user.route";
 import circulationRoute from "./routes/circulation.route";
+import notificationsRoute from "./routes/notifications.route"
 import { Server as HttpServer } from "http";
 
 const app: Express = express();
@@ -56,6 +57,7 @@ app.use("/api/", authorRoute);
 app.use("/api/", refreshTokenRoute);
 app.use("/api/", userRoute);
 app.use("/api/", circulationRoute);
+app.use("/api/", notificationsRoute);
 
 // Error Handling
 app.use((req, res, next) => {
