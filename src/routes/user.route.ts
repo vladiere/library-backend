@@ -16,6 +16,7 @@ router.post("/user/login", userController.loginUser);
 router.post("/user/logout", verifyToken, userController.logoutUser);
 router.post("/user/get/details", verifyToken, userController.getUser);
 router.post("/user/change/password", verifyToken, userController.changeUserPass);
+router.post("/user/get/borrowed/books", verifyToken, userController.getMyBorrowedBooks);
 
 router.get("/user/active", verifyToken, userController.getActiveUser);
 export default router;

@@ -1,4 +1,3 @@
-
 import { Connect, Query } from "../config/mysql";
 import logger from "../config/logger";
 import { executeQuery } from "../functions/executeQuery";
@@ -123,16 +122,17 @@ const getUser = async (user_id: number) => {
 
 const getActiveUser = async () => {
   try {
-    const query = "SELECT COUNT(*) AS total_active FROM user_details WHERE user_status = ?";
+    const query =
+      "SELECT COUNT(*) AS total_active FROM user_details WHERE user_status = ?";
 
-    const result: any = await executeQuery(query, ['active']);
+    const result: any = await executeQuery(query, ["active"]);
     return result[0];
   } catch (error: any) {
-    logger.error('Getting active users error at service');
+    logger.error("Getting active users error at service");
     console.error(error);
     return error;
   }
-}
+};
 
 const logoutUser = async (refresh_token: string) => {
   try {
@@ -140,7 +140,7 @@ const logoutUser = async (refresh_token: string) => {
 
     const result: any = await executeQuery(query, [refresh_token]);
 
-    return result[1]
+    return result[1];
   } catch (error: any) {
     logger.error("Logging out Librarian Error:");
     console.error(error);
@@ -169,6 +169,25 @@ const changeUserPass = async (email: string, password: string) => {
   }
 };
 
+const getMyBorrowedBooks = async (option: string, user_id: number) => {
+  try {
+    let query = "";
+    if (option === "all") {
+      query = "SELECT * FROM transactions_book WHERE user_id = ?";
+    } else if(option === "Pending") {
+      query = `SELECT * FROM transactions_pending WHERE user_id = ? AND status = '${option}'`;
+    } else {
+      query = "SELECT * FROM transactions_pending WHERE user_id = ?";
+    }
+    const result: any = await executeQuery(query, [user_id]);
+    return result;
+  } catch (error: any) {
+    logger.error("Getting my borrowed books error at service");
+    console.error(error);
+    return error;
+  }
+};
+
 export default {
   registerUser,
   loginUser,
@@ -176,5 +195,5 @@ export default {
   getUser,
   getActiveUser,
   changeUserPass,
+  getMyBorrowedBooks,
 };
-

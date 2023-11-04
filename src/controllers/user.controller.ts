@@ -81,6 +81,18 @@ const changeUserPass = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json(error);
   }
+};
+
+const getMyBorrowedBooks = async (req: Request, res: Response) => {
+  try {
+    const { option, user_id } = req.body;
+    const result = await userService.getMyBorrowedBooks(option, user_id);
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error('Getting my borrowed books error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
 }
 
 
@@ -91,4 +103,5 @@ export default {
   getUser,
   getActiveUser,
   changeUserPass,
+  getMyBorrowedBooks,
 };

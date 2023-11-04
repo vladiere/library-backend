@@ -9,9 +9,11 @@ const getBookTransactions = async (
     let query = "";
     if (option === "Checked Out" && transaction_status === "Completed") {
       query = `SELECT * FROM transactions_book WHERE transaction_type != '${option}' AND status != '${transaction_status}'`;
+    } else if (option === "Checked Out" && transaction_status === "Active") {
+      query = `SELECT * FROM transactions_book WHERE transaction_type = '${option}' AND status = '${transaction_status}'`;
     } else {
-      if (transaction_status === 'all') {
-        query = "SELECT * FROM transactions_book WHERE status != 'Active'"
+      if (transaction_status === "all") {
+        query = "SELECT * FROM transactions_book WHERE status != 'Active'";
       } else {
         query = `SELECT * FROM transactions_book WHERE status = '${transaction_status}'`;
       }
