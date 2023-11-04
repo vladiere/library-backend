@@ -131,7 +131,7 @@ const getAllPendingTransactions = async (option: string) => {
   try {
     const query = "CALL GetPendingTransactions(?)";
     const result: any = await executeQuery(query, [option]);
-    return result[0][0];
+    return result[0];
   } catch (error: any) {
     logger.error("Getting all pending transactions error at service");
     console.error(error);
