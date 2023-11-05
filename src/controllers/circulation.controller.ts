@@ -38,10 +38,22 @@ const approvePendingTransaction = async (req: Request, res: Response) => {
   }
 };
 
+const getAllUserLists = async (req: Request, res: Response) => {
+  try {
+    const { user_id } = req.body;
+    const result = await circulationService.getAllUserLists(user_id);
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error('Getting all user lists error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
 const createUserLists = async (req: Request, res: Response) => {
   try {
-    const { user_id, list_name } = req.body;
-    const result = await circulationService.createUserLists(user_id, list_name);
+    const { user_id, list_name, list_desc } = req.body;
+    const result = await circulationService.createUserLists(user_id, list_name, list_desc);
     return res.status(201).json(result);
   } catch (error: any) {
     logger.error('creating user lists error at controller');
@@ -64,8 +76,8 @@ const deleteUserList = async (req: Request, res: Response) => {
 
 const updateUserList = async (req: Request, res: Response) => {
   try {
-    const { list_id, new_name } = req.body;
-    const result = await circulationService.updateUserList(list_id, new_name);
+    const { list_id, new_name, list_desc } = req.body;
+    const result = await circulationService.updateUserList(list_id, new_name, list_desc);
     return res.status(200).json(result);
   } catch (error: any) {
     logger.error('Updating user list error at controller');
@@ -134,4 +146,5 @@ export default {
   insertCollection,
   removeCollection,
   getAllPendingTransactions,
+  getAllUserLists,
 }

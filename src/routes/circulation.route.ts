@@ -9,6 +9,7 @@ router.post('/transaction/cancel', verifyToken, circulationController.cancelPend
 router.post('/transaction/approve', verifyToken, circulationController.approvePendingTransaction);
 
 // For user lists and list contents
+router.post('/lists/get', verifyToken, circulationController.getAllUserLists);
 router.post('/list/create', verifyToken, circulationController.createUserLists);
 router.post('/list/update', verifyToken, circulationController.updateUserList);
 router.post('/list/remove', verifyToken, circulationController.deleteUserList);

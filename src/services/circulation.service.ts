@@ -48,10 +48,22 @@ const approvePendingTransaction = async (transaction_id: number) => {
   }
 };
 
-const createUserLists = async (user_id: number, list_name: string) => {
+const getAllUserLists = async (user_id: number) => {
   try {
-    const query = "CALL CreateNewList(?,?)";
-    const result: any = await executeQuery(query, [user_id, list_name]);
+    const query = "SELECT list_id, list_name, DATE_FORMAT(created_at, '%M %e, %Y') AS created_at, list_status, list_desc FROM user_lists WHERE user_id = ?";
+    const result = await executeQuery(query, [user_id]);
+    return result;
+  } catch (error: any) {
+    logger.error('Getting all user lists error at service');
+    console.error(error);
+    return error;
+  }
+}
+
+const createUserLists = async (user_id: number, list_name: string, list_desc: string) => {
+  try {
+    const query = "CALL CreateNewList(?,?,?)";
+    const result: any = await executeQuery(query, [user_id, list_name, list_desc]);
     console.log(result[0][0]);
     return result[0][0];
   } catch (error: any) {
@@ -74,10 +86,10 @@ const deleteUserList = async (list_id: number) => {
   }
 };
 
-const updateUserList = async (list_id: number, new_name: string) => {
+const updateUserList = async (list_id: number, new_name: string, list_desc: string) => {
   try {
-    const query = "CALL UpdateUserList(?,?)";
-    const result: any = await executeQuery(query, [list_id, new_name]);
+    const query = "CALL UpdateUserList(?,?,?)";
+    const result: any = await executeQuery(query, [list_id, new_name, list_desc]);
     console.log(result[0]);
     return result[0][0];
   } catch (error: any) {
@@ -150,4 +162,5 @@ export default {
   insertCollection,
   removeCollection,
   getAllPendingTransactions,
+  getAllUserLists,
 };
