@@ -37,9 +37,9 @@ const getUser = async (req: Request, res: Response) => {
 
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error('Getting user details error at controller');
+    logger.error("Getting user details error at controller");
     console.error(error);
-    return res.status(500).json(error)
+    return res.status(500).json(error);
   }
 };
 
@@ -49,7 +49,7 @@ const getActiveUser = async (req: Request, res: Response) => {
 
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error('Getting active users error at controller');
+    logger.error("Getting active users error at controller");
     console.error(error);
     return res.status(500).json(error);
   }
@@ -77,7 +77,7 @@ const changeUserPass = async (req: Request, res: Response) => {
 
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error('Changing password error at controller');
+    logger.error("Changing password error at controller");
     console.error(error);
     return res.status(500).json(error);
   }
@@ -89,12 +89,36 @@ const getMyBorrowedBooks = async (req: Request, res: Response) => {
     const result = await userService.getMyBorrowedBooks(option, user_id);
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error('Getting my borrowed books error at controller');
+    logger.error("Getting my borrowed books error at controller");
     console.error(error);
     return res.status(500).json(error);
   }
-}
+};
 
+const userContribute = async (req: Request, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(500).json({ message: "No file uploaded" });
+    }
+    const file_book = req.file;
+    const { user_id, file_title, file_author, file_category, file_publisher } = req.body;
+    console.log(req.body);
+    console.log(file_book);
+    const result = userService.userContribute(
+      user_id,
+      file_book.filename,
+      file_title,
+      file_author,
+      file_category,
+      file_publisher,
+    );
+    return res.status(201).json(result);
+  } catch (error: any) {
+    logger.error("Contributing user error at controller");
+    console.error(error);
+    return res.status(500).json(error);
+  }
+};
 
 export default {
   registerUser,
@@ -104,4 +128,5 @@ export default {
   getActiveUser,
   changeUserPass,
   getMyBorrowedBooks,
+  userContribute,
 };

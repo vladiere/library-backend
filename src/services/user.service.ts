@@ -174,7 +174,7 @@ const getMyBorrowedBooks = async (option: string, user_id: number) => {
     let query = "";
     if (option === "all") {
       query = "SELECT * FROM transactions_book WHERE user_id = ?";
-    } else if(option === "Pending") {
+    } else if (option === "Pending") {
       query = `SELECT * FROM transactions_pending WHERE user_id = ? AND status = '${option}'`;
     } else {
       query = "SELECT * FROM transactions_pending WHERE user_id = ?";
@@ -188,6 +188,18 @@ const getMyBorrowedBooks = async (option: string, user_id: number) => {
   }
 };
 
+const userContribute = async (user_id: number, file_path: string, file_title: string, file_author: string, file_category: string,file_publisher: string) => {
+  try {
+    const query = "CALL UserBookContribute(?,?,?,?,?,?)";
+    const result = await executeQuery(query, [user_id, file_path, file_title, file_author, file_category, file_publisher]);
+    return result;
+  } catch (error: any) {
+    logger.error("User contributing error at service");
+    console.error(error);
+    return error;
+  }
+};
+
 export default {
   registerUser,
   loginUser,
@@ -196,4 +208,5 @@ export default {
   getActiveUser,
   changeUserPass,
   getMyBorrowedBooks,
+  userContribute,
 };

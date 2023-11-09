@@ -120,7 +120,6 @@ const addBookImage = async (req: Request, res: Response) => {
 
     const fileData = req.file;
     const { book_id } = req.body;
-    console.log(fileData);
 
     const result = await bookService.addBookImage(
       fileData.filename,

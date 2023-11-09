@@ -30,10 +30,9 @@ const getBookTransactions = async (
 
 const getFinesAndFeesSummary = async () => {
   try {
-    const query = "SELECT * FROM fines_and_fees_summary";
-    const result = await executeQuery(query);
-    console.log(result);
-    return result;
+    const query = "CALL DisplayFinesAndFees();";
+    const result: any = await executeQuery(query);
+    return result[0];
   } catch (error: any) {
     logger.error("Getting fines and fees summary error at servive");
     console.error(error);
