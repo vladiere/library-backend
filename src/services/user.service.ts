@@ -188,17 +188,38 @@ const getMyBorrowedBooks = async (option: string, user_id: number) => {
   }
 };
 
-const userContribute = async (user_id: number, file_path: string, file_title: string, file_author: string, file_category: string,file_publisher: string) => {
+const userContribute = async (user_id: number, file_path: string, file_title: string, file_author: string, file_category: string,file_publisher: string, file_description: string) => {
   try {
-    const query = "CALL UserBookContribute(?,?,?,?,?,?)";
-    const result = await executeQuery(query, [user_id, file_path, file_title, file_author, file_category, file_publisher]);
-    return result;
+    const query = "CALL UserBookContribute(?,?,?,?,?,?,?)";
+    const result: any = await executeQuery(query, [user_id, file_path, file_title, file_author, file_category, file_publisher, file_description]);
+    return result[0][0];
   } catch (error: any) {
     logger.error("User contributing error at service");
     console.error(error);
     return error;
   }
 };
+
+const getUserContributions = async (user_id: number, limit: number) => {
+  try {
+    let query = '';
+    if (user_id !== 0) {
+      query = `SELECT * FROM contribution_details WHERE user_id = ${user_id} ORDER BY file_total_downloads ASC`;
+    } else {
+      if (limit === 0) {
+        query = 'SELECT * FROM contribution_details WHERE file_status = "accepted" ORDER BY file_total_downloads ASC';
+      } else {
+        query = `SELECT * FROM contribution_details WHERE file_status = 'accepted' ORDER BY file_total_downloads ASC LIMIT ${limit}`;
+      }
+    }
+    const result = await executeQuery(query);
+    return result;
+  } catch (error) {
+    logger.error('Getting user contributions error at servive');
+    console.error(error);
+    return error;
+  }
+}
 
 export default {
   registerUser,
@@ -209,4 +230,5 @@ export default {
   changeUserPass,
   getMyBorrowedBooks,
   userContribute,
+  getUserContributions
 };

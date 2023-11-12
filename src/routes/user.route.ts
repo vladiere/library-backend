@@ -32,6 +32,11 @@ router.post(
   multerFile.single("file_book"),
   userController.userContribute,
 );
+router.post(
+  "/user/book/contribute/list",
+  verifyToken,
+  userController.getUserContributions
+)
 
 router.get("/user/active", verifyToken, userController.getActiveUser);
 export default router;

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import logger from "../config/logger";
 import readExcelFileService from "../services/excel.service";
-import bookService from "../services/books.service";
+import bookService from "../services/book.service";
 
 const uploadExcel = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,9 +22,12 @@ const uploadExcel = async (req: Request, res: Response, next: NextFunction) => {
 
 const singleAddRecord = async (req: Request, res: Response) => {
   try {
-    const { records } = req.body;
+    console.log(req.file ? req.file.filename : '');
+    console.log(req.body)
+    const records = req.body;
+    const book_img = req.file ? req.file.filename : '';
 
-    const result = await bookService.addOneBook(records);
+    const result = await bookService.addOneBook(records, book_img);
 
     return res.status(200).json(result);
   } catch (error) {

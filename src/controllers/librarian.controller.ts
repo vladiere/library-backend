@@ -32,7 +32,33 @@ const updateLibrarianInfo = async (req: Request, res: Response) => {
   }
 };
 
+const getAllUserContributions = async (req: Request, res: Response) => {
+  try {
+    const { file_status } = req.body;
+    const result = await librarianService.getAllUserContributions(file_status);
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Getting all contributors error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
+const manageUserContribution = async (req: Request, res: Response) => {
+  try {
+    const { action, user_id, p_status, contribution_id } = req.body;
+    const result = await librarianService.manageUserContribution(action, user_id, p_status, contribution_id);
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Managing user contribution error at controller');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
 export default {
   getLibrarianData,
   updateLibrarianInfo,
+  getAllUserContributions,
+  manageUserContribution,
 };

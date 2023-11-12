@@ -25,5 +25,4 @@ export default interface NewIBook {
   cost_price: number;
   copyright_yr: string;
   remarks: string;
-  image: string;
 }

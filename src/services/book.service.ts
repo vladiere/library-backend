@@ -45,7 +45,7 @@ const bulkUpload = async (bookRecords: IBook[]): Promise<any> => {
   }
 };
 
-const addOneBook = async (bookRecord: NewIBook) => {
+const addOneBook = async (bookRecord: NewIBook, book_img_path: string) => {
   try {
     const query = "CALL AddBook(?,?,?,?,?,?,?,?,?,?);";
 
@@ -59,7 +59,7 @@ const addOneBook = async (bookRecord: NewIBook) => {
       bookRecord.cost_price,
       bookRecord.copyright_yr,
       bookRecord.remarks,
-      bookRecord.image,
+      book_img_path,
     ]);
 
     return result[0][0];

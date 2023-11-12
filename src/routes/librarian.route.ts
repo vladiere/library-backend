@@ -14,5 +14,14 @@ router.post(
   verifyToken,
   librarianController.updateLibrarianInfo,
 );
-
+router.post(
+  "/contributors/get/all",
+  verifyToken,
+  librarianController.getAllUserContributions
+);
+router.post(
+  "/contributors/manage",
+  verifyToken,
+  librarianController.manageUserContribution
+)
 export default router;

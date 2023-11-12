@@ -22,7 +22,7 @@ router.post(
   bookController.bulkUploadRecords,
 );
 // Upload book record/s
-router.post("/add/book/record", verifyToken, bookController.singleAddRecord);
+router.post("/add/book/record", verifyToken, uploadImage.single("file_img"), bookController.singleAddRecord);
 // Get book/s
 router.get("/get/all/books", verifyToken, bookController.getAllBooksRecord);
 // get all books inventory

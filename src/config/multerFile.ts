@@ -6,9 +6,10 @@ const storage = multer.diskStorage({
     callback(null, path.join(__dirname, "../public/downloads"));
   },
   filename: (req, file, callback) => {
+    console.log(path.parse(file.originalname))
     callback(
       null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname),
+      path.parse(file.originalname).name.toLowerCase() + "-" + Date.now() + path.extname(file.originalname),
     );
   },
 });
