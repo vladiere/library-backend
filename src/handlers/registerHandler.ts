@@ -45,7 +45,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       // Match and extract the name, department, role, and ID number using regular expressions
       const nameMatches = text.match(nameRegex);
       const idNumberMatches = text.match(idNumberRegex);
-      const departmentRegex = /(BSIT|BEED|BSHM|BSED|IT|EDUCATION|HM)\b/g; // Matches department codes
+      const departmentRegex = /(BSIT|BEED|BSHM|BSED|BSED-ENG|BSED-FIL|BSED-SCI|IT|EDUCATION|HM)\b/g; // Matches department codes
 
       // Define words and phrases to remove
       const wordsAndPhrasesToRemoveFromText = [

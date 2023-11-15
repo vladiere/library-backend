@@ -38,14 +38,19 @@ const updateLibrarianInfo = async (librarian: ILibrarian) => {
 
 const getAllUserContributions = async (file_status: string) => {
   try {
-    const query = "SELECT * FROM contribution_details WHERE file_status = ? ORDER BY uploaded_date ASC";
-    const result = executeQuery(query,[file_status]);
-    return result;
-  } catch (error) {
-    logger.error('Getting all user contributions error at service');
-    console.error(error);
-    return error;
-  }
+        let query = "";
+        if (file_status === 'all') {
+            query = "SELECT * FROM contribution_details WHERE file_status != ? ORDER BY uploaded_date ASC";
+        } else {
+            query = "SELECT * FROM contribution_details WHERE file_status = ? ORDER BY uploaded_date ASC";
+        }
+        const result = executeQuery(query,[file_status]);
+        return result;
+    } catch (error) {
+        logger.error('Getting all user contributions error at service');
+        console.error(error);
+        return error;
+    }
 }
 
 const manageUserContribution = async (action: string, user_id: number, p_status: string, contribution_id: number) => {
@@ -60,6 +65,8 @@ const manageUserContribution = async (action: string, user_id: number, p_status:
     return error;
   }
 }
+
+
 
 export default {
   getAllLibrarian,

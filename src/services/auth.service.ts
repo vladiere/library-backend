@@ -18,7 +18,7 @@ const registerLibrarian = async (
     let query = "CALL AddLibrarian(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
     const connection = await Connect();
-    const result = await Query<IMySQLResult>(connection, query, [
+    const result: any = await Query<IMySQLResult>(connection, query, [
       librarian.firstname,
       librarian.middlename,
       librarian.lastname,
@@ -36,7 +36,7 @@ const registerLibrarian = async (
       librarian.privilege,
     ]);
 
-    return result;
+    return result[0];
   } catch (error: any) {
     logger.error(`Registration Error: ${error.message}`);
     return {
