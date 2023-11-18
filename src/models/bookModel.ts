@@ -12,6 +12,19 @@ export default interface IBook {
   Image: string;
 }
 
+export default interface IBooksRecord {
+  'accession no': number;
+  'date received': string;
+  author: string;
+  'title of the book': string;
+  edition: string;
+  volumes: string;
+  'cost price': string;
+  publisher: string;
+  'copyright yr': string;
+  remarks: string;
+}
+
 export default interface NewIBook {
   accession_id: number;
   accession_no: number;

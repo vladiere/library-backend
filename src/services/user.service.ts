@@ -200,17 +200,13 @@ const userContribute = async (user_id: number, file_path: string, file_title: st
   }
 };
 
-const getUserContributions = async (user_id: number, limit: number) => {
+const getUserContributions = async (user_id: number) => {
   try {
     let query = '';
     if (user_id !== 0) {
       query = `SELECT * FROM contribution_details WHERE user_id = ${user_id} ORDER BY file_total_downloads ASC`;
     } else {
-      if (limit === 0) {
-        query = 'SELECT * FROM contribution_details WHERE file_status = "accepted" ORDER BY file_total_downloads ASC';
-      } else {
-        query = `SELECT * FROM contribution_details WHERE file_status = 'accepted' ORDER BY file_total_downloads ASC LIMIT ${limit}`;
-      }
+      query = 'SELECT * FROM contribution_details WHERE file_status = "accepted" ORDER BY file_total_downloads ASC';
     }
     const result = await executeQuery(query);
     return result;

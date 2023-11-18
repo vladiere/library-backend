@@ -2,39 +2,32 @@ import logger from "../config/logger";
 import { Connect, Query } from "../config/mysql";
 import { executeQuery } from "../functions/executeQuery";
 import IAcquisition from "../models/acquisitionModel";
-import IBook from "../models/bookModel";
 import NewIBook from "../models/bookModel";
+import IBooksRecord from "../models/bookModel";
 
-const bulkUpload = async (bookRecords: IBook[]): Promise<any> => {
+const bulkUpload = async (bookRecords: string): Promise<any> => {
   try {
     let result: any = "";
+    const newBookRecords = JSON.parse(bookRecords);
 
-    for (const item of bookRecords) {
-      let query = `CALL AddBook(${item["Accession No"]},"${
-        item["Date Received"] === null || undefined ? "" : item["Date Received"]
-      }","${
-        item["Title of the Book"] === null || undefined
-          ? ""
-          : item["Title of the Book"]
-      }","${item.Author === null || undefined ? "" : item.Author}","${
-        item.Edition === null || undefined ? "" : item.Edition
-      }","${item.Publisher === null || undefined ? "" : item.Publisher}","${
-        item["Cost Price"] === "" || undefined || null
-          ? "0"
-          : item["Cost Price"]
-      }","${
-        item["Copyright Yr"] === "" || null || undefined
-          ? ""
-          : item["Copyright Yr"]
-      }","${
-        item.Remarks === "" || null || undefined ? "" : item["Remarks"]
-      }","")`;
+    for (const item of newBookRecords) {
+        const accession_no = parseInt(item['accession no']);
+        const date_received = item['date received'];
+        const title = item['title of the book'];
+        const author = item.author;
+        const edition = item.edition;
+        const publisher = item.publisher;
+        const cost = item['cost price'] ? item['cost price'] : "0";
+        const copyright_yr = item['copyright yr'];
+        const remarks = item.remarks;
+        
+        const query = `CALL AddBook(${accession_no},"${date_received}","${title}","${author}","${edition}","${publisher}","${cost}","${copyright_yr}","${remarks}","")`
 
-      const connection = await Connect();
-      result = await Query(connection, query);
+        const connection = await Connect();
+        result = await Query(connection, query);
     }
-
     return result;
+
   } catch (error: any) {
     logger.error("Inserting Bulk records Error: ");
     console.error(error.message, error);
@@ -101,7 +94,7 @@ const getAllBookInventory = async (limit: number, book_id?: number) => {
     }
 
     if (book_id) {
-      query = `SELECT * FROM book_inventory WHERE book_id = ${book_id};`;
+      query = `SELECT * FROM book_inventory WHERE book_id = ${book_id} LIMIT 1;`;
     }
 
     const result = await executeQuery(query);

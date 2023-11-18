@@ -122,8 +122,8 @@ const userContribute = async (req: Request, res: Response) => {
 
 const getUserContributions = async (req: Request, res: Response) => {
   try {
-    const { user_id, limit } = req.body;
-    const result = await userService.getUserContributions(user_id, limit);
+    const { user_id } = req.body;
+    const result = await userService.getUserContributions(user_id);
     return res.status(200).json(result);
   } catch (error: any) {
     logger.error('Getting user contribution error at controller');
