@@ -47,7 +47,7 @@ const loginUser = async (
     const result = await new Promise((resolve, reject) => {
       bcryptjs.compare(password, users[0][0].password, (error, result) => {
         if (error) {
-          logger.error(error);
+          console.error(error);
           // Reject the Promise with an error object
           reject({
             message: error.message,
@@ -70,7 +70,7 @@ const loginUser = async (
               // Resolve the Promise with the desired value
               resolve({
                 user_id: users[0][0].user_id,
-                privilege: users[0][0]?.privilege,
+                privilege: users[0][0]?.privilege || users[0][0]?.role,
                 accessToken,
                 refreshToken,
               });
@@ -102,14 +102,7 @@ const loginUser = async (
 
 const getUser = async (user_id: number) => {
   try {
-    let query = "";
-
-    if (user_id == 0) {
-      query = "SELECT * FROM user_details WHERE user_id";
-    } else {
-      query = "SELECT * FROM user_details WHERE user_id = ?";
-    }
-
+    const query = "SELECT * FROM user_details WHERE user_id = ?";
     const result = await executeQuery(query, [user_id]);
 
     return result;
@@ -169,18 +162,14 @@ const changeUserPass = async (email: string, password: string) => {
   }
 };
 
-const getMyBorrowedBooks = async (option: string, user_id: number) => {
+const getMyBorrowedBooks = async (user_id: number) => {
   try {
-    let query = "";
-    if (option === "all") {
-      query = "SELECT * FROM transactions_book WHERE user_id = ?";
-    } else if (option === "Pending") {
-      query = `SELECT * FROM transactions_pending WHERE user_id = ? AND status = '${option}'`;
-    } else {
-      query = "SELECT * FROM transactions_pending WHERE user_id = ?";
-    }
+    const query = "CALL GetTransactionBookAndPending(?)"
     const result: any = await executeQuery(query, [user_id]);
-    return result;
+    return {
+        transaction_pending: result[1],
+        transaction_book: result[0],
+    };
   } catch (error: any) {
     logger.error("Getting my borrowed books error at service");
     console.error(error);
@@ -217,6 +206,18 @@ const getUserContributions = async (user_id: number) => {
   }
 }
 
+const addInstructorRecommendations = async (user_id: number, book_id: number) => {
+    try {
+        const query = "CALL AddInstructorRecommendations(?,?)";
+        const result = await executeQuery(query, [user_id,book_id]);
+        return result;
+    } catch (error) {
+        logger.error('Adding instructor recommendations error at service: ');
+        console.error(error);
+        return error;
+    }
+}
+
 export default {
   registerUser,
   loginUser,
@@ -226,5 +227,6 @@ export default {
   changeUserPass,
   getMyBorrowedBooks,
   userContribute,
-  getUserContributions
+  getUserContributions,
+  addInstructorRecommendations,
 };

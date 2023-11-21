@@ -85,8 +85,8 @@ const changeUserPass = async (req: Request, res: Response) => {
 
 const getMyBorrowedBooks = async (req: Request, res: Response) => {
   try {
-    const { option, user_id } = req.body;
-    const result = await userService.getMyBorrowedBooks(option, user_id);
+    const { user_id } = req.body;
+    const result = await userService.getMyBorrowedBooks(user_id);
     return res.status(200).json(result);
   } catch (error: any) {
     logger.error("Getting my borrowed books error at controller");
@@ -132,6 +132,18 @@ const getUserContributions = async (req: Request, res: Response) => {
   }
 }
 
+const addInstructorRecommendations = async (req: Request, res: Response) => {
+    try {
+        const { user_id, book_id } = req.body;
+        const result = await userService.addInstructorRecommendations(user_id,book_id);
+        return res.status(200).json(result);
+    } catch (error) {
+        logger.error('Adding instructor recommendations error at controller: ');
+        console.error(error);
+        return res.status(500).json(error);
+    }
+}
+
 export default {
   registerUser,
   loginUser,
@@ -142,4 +154,5 @@ export default {
   getMyBorrowedBooks,
   userContribute,
   getUserContributions,
+  addInstructorRecommendations,
 };

@@ -170,7 +170,7 @@ const updateBookRecord = async (
   book_record: NewIBook,
 ): Promise<NewIBook | any> => {
   try {
-    const query = `CALL UpdateBookRecord(${book_record.book_id},'${book_record.edition}',${book_record.cost_price},${book_record.accession_id}, '${book_record.remarks}');`;
+    const query = `CALL UpdateBookRecord(${book_record.book_id},'${book_record.edition}',${book_record.cost_price}, '${book_record.remarks}');`;
 
     const result: any = await executeQuery(query);
 
