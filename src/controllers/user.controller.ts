@@ -144,6 +144,18 @@ const addInstructorRecommendations = async (req: Request, res: Response) => {
     }
 }
 
+const getPersonalizeInstructorRecommendations = async (req: Request, res: Response) => {
+    try {
+        const { p_role, user_id } = req.body;
+        const result = await userService.getPersonalizeInstructorRecommendations(p_role,user_id);
+        return res.status(200).json(result);
+    } catch (error) {
+        logger.error('Getting all personalize and instructor recommendations error at controller: ');
+        console.error(error);
+        return res.status(500).json(error);
+    }
+}
+
 export default {
   registerUser,
   loginUser,
@@ -155,4 +167,5 @@ export default {
   userContribute,
   getUserContributions,
   addInstructorRecommendations,
+  getPersonalizeInstructorRecommendations,
 };

@@ -209,10 +209,23 @@ const getUserContributions = async (user_id: number) => {
 const addInstructorRecommendations = async (user_id: number, book_id: number) => {
     try {
         const query = "CALL AddInstructorRecommendations(?,?)";
-        const result = await executeQuery(query, [user_id,book_id]);
-        return result;
+        const result: any = await executeQuery(query, [user_id,book_id]);
+        return result[0][0];
     } catch (error) {
         logger.error('Adding instructor recommendations error at service: ');
+        console.error(error);
+        return error;
+    }
+}
+
+const getPersonalizeInstructorRecommendations = async (p_role: string, user_id: number) => {
+    try {
+        const query = "CALL GetPersonalizeInstructorRecommendations(?,?)";
+        const result: any = await executeQuery(query, [p_role,user_id]);
+        console.log(result[0]);
+        return result[0];
+    } catch (error) {
+        logger.error('Getting all personalize and instructor recommendations erorr at service: ');
         console.error(error);
         return error;
     }
@@ -229,4 +242,5 @@ export default {
   userContribute,
   getUserContributions,
   addInstructorRecommendations,
+  getPersonalizeInstructorRecommendations,
 };

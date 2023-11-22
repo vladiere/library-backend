@@ -38,6 +38,7 @@ router.post(
   userController.getUserContributions
 );
 router.post('/instructor/add/recommendations', verifyToken, userController.addInstructorRecommendations);
+router.post('/instructor/get/recommendations', verifyToken, userController.getPersonalizeInstructorRecommendations);
 
 router.get("/user/active", verifyToken, userController.getActiveUser);
 export default router;
