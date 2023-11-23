@@ -222,7 +222,6 @@ const getPersonalizeInstructorRecommendations = async (p_role: string, user_id: 
     try {
         const query = "CALL GetPersonalizeInstructorRecommendations(?,?)";
         const result: any = await executeQuery(query, [p_role,user_id]);
-        console.log(result[0]);
         return result[0];
     } catch (error) {
         logger.error('Getting all personalize and instructor recommendations erorr at service: ');

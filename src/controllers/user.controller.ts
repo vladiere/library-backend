@@ -23,7 +23,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error("Loggin in user error at controller");
+    logger.error("Logging in user error at controller");
     console.error(error);
     return res.status(500).json(error);
   }
