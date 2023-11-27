@@ -64,7 +64,7 @@ const renewalBook = async (number_date: number, transaction_id: number) => {
   try {
     const query = "CALL RenewalBorrowedBook(?,?)";
     const result: any = await executeQuery(query, [number_date, transaction_id]);
-    console.log(result[0][0]);
+    console.log(result[0][0])
     return result[0][0];
   } catch (error) {
     logger.error('Renewal of book error at service: ');
@@ -90,9 +90,16 @@ const getAllRenewalBook = async () => {
 
 const manageRenewalBook = async(renewal_id: number, renewal_status: string) => {
   try {
-    const query = "CALL CancelRenewalBook(?,?)";
-    const result: any = await executeQuery(query, [renewal_id, renewal_status]);
-    return result[0];
+    console.log('renewal_id: ', renewal_id);
+    let query = "";
+    if (renewal_status === 'Approved') {
+      query = "CALL ApproveBookRenewal(?)";
+    } else if (renewal_status === 'Cancelled') {
+      query = "CALL CancelRenewalBook(?)";
+    }
+    const result: any = await executeQuery(query, [renewal_id]);
+    console.log(result)
+    return result[0][0];
   } catch (error) {
     logger.error('Mangaing renewal book error at service: ');
     console.error(error);

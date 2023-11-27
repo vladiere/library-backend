@@ -18,7 +18,7 @@ export default interface IBooksRecord {
   author: string;
   'title of the book': string;
   edition: string;
-  volumes: string;
+  volumes: string | number;
   'cost price': string;
   publisher: string;
   'copyright yr': string;
