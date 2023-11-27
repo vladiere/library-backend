@@ -33,7 +33,7 @@ export default interface NewIBook {
   author: string;
   title_of_the_book: string;
   edition: string;
-  volumes: number;
+  volumes: number | string;
   publisher: string;
   cost_price: number;
   copyright_yr: string;
