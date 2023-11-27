@@ -60,8 +60,51 @@ const checkedOutReturn = async (
   }
 };
 
+const renewalBook = async (number_date: number, transaction_id: number) => {
+  try {
+    const query = "CALL RenewalBorrowedBook(?,?)";
+    const result: any = await executeQuery(query, [number_date, transaction_id]);
+    console.log(result[0][0]);
+    return result[0][0];
+  } catch (error) {
+    logger.error('Renewal of book error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
+const getAllRenewalBook = async () => {
+  try {
+    const query = "CALL GetRenewalDetails()";
+    const result: any = await executeQuery(query);
+    return {
+      pending_renewals: result[0],
+      all_renewal: result[1]
+    }
+  } catch (error) {
+    logger.error('Getting all renewal book error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
+const manageRenewalBook = async(renewal_id: number, renewal_status: string) => {
+  try {
+    const query = "CALL CancelRenewalBook(?,?)";
+    const result: any = await executeQuery(query, [renewal_id, renewal_status]);
+    return result[0];
+  } catch (error) {
+    logger.error('Mangaing renewal book error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
 export default {
   getBookTransactions,
   checkedOutReturn,
   getFinesAndFeesSummary,
+  renewalBook,
+  manageRenewalBook,
+  getAllRenewalBook,
 };

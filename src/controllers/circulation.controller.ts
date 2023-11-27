@@ -122,11 +122,9 @@ const removeCollection = async (req: Request, res: Response) => {
   }
 };
 
-
 const getAllPendingTransactions = async (req: Request, res: Response) => {
   try {
-    const { option } = req.body;
-    const result = await circulationService.getAllPendingTransactions(option);
+    const result = await circulationService.getAllPendingTransactions();
     return res.status(200).json(result);
   } catch (error: any) {
     logger.error('Getting all pending transactions error at controller');

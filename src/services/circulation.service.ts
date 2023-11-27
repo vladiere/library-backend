@@ -138,12 +138,20 @@ const removeCollection = async (collection_id: number) => {
   }
 };
 
-
-const getAllPendingTransactions = async (option: string) => {
+const getAllPendingTransactions = async () => {
   try {
-    const query = "CALL GetPendingTransactions(?)";
-    const result: any = await executeQuery(query, [option]);
-    return result[0];
+    const query = "CALL GetPendingTransactions()";
+    const result: any = await executeQuery(query);
+    console.log(result);
+    return { 
+      reserved: result[0],
+      held: result[1],
+      borrowed: result[2],
+      renewal: result[3],
+      approved: result[4],
+      finefees: result[5],
+      all_renewals: result[6],
+    };
   } catch (error: any) {
     logger.error("Getting all pending transactions error at service");
     console.error(error);

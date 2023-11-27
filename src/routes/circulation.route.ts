@@ -21,6 +21,6 @@ router.post('/collection/remove', verifyToken, circulationController.removeColle
 
 
 // Transactions
-router.post('/transactions/all', verifyToken, circulationController.getAllPendingTransactions);
+router.get('/transactions/all', verifyToken, circulationController.getAllPendingTransactions);
 
 export default router;

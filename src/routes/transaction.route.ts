@@ -20,5 +20,20 @@ router.post(
   verifyToken,
   transactionController.checkedOutReturn,
 );
+router.post(
+  "/transaction/renew/book",
+  verifyToken,
+  transactionController.renewalBook
+)
+router.get(
+  "/transaction/renew/get",
+  verifyToken,
+  transactionController.getAllRenewalBook
+)
+router.post(
+  "/transaction/renew/manage",
+  verifyToken,
+  transactionController.manageRenewalBook
+)
 
 export default router;

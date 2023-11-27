@@ -11,14 +11,14 @@ const bulkUpload = async (bookRecords: string): Promise<any> => {
     const newBookRecords = JSON.parse(bookRecords);
 
     for (const item of newBookRecords) {
-        const accession_no = parseInt(item['accession no']);
+        const accession_no = parseInt(item['accession no.']);
         const date_received = item['date received'];
         const title = item['title of the book'];
         const author = item.author;
         const edition = item.edition;
         const publisher = item.publisher;
         const cost = item['cost price'] ? item['cost price'] : "0";
-        const copyright_yr = item['copyright yr'];
+        const copyright_yr = item['copyright yr.'];
         const remarks = item.remarks;
         
         const query = `CALL AddBook(${accession_no},"${date_received}","${title}","${author}","${edition}","${publisher}","${cost}","${copyright_yr}","${remarks}","")`
