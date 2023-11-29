@@ -42,4 +42,6 @@ router.post('/instructor/get/recommendations', verifyToken, userController.getPe
 router.get('/student/get/instructor/recommendations', verifyToken, userController.getInstructorRecommendations);
 
 router.get("/user/active", verifyToken, userController.getActiveUser);
+
+
 export default router;

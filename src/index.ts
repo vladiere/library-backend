@@ -50,6 +50,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Default route
+app.get('/', (req, res) => {
+  return res.status(200).json({ message: 'OK' });
+})
+
 // Routes here
 app.use("/api/", bookRoutes);
 app.use("/api/", authRoute);
