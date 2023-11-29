@@ -230,6 +230,18 @@ const getPersonalizeInstructorRecommendations = async (p_role: string, user_id: 
     }
 }
 
+const getInstructorRecommendations = async () => {
+  try {
+    const query = "SELECT * FROM instructor_recommendations_details";
+    const result = await executeQuery(query);
+    return result;
+  } catch (error) {
+    logger.error('Getting instructor recommendations error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
 export default {
   registerUser,
   loginUser,
@@ -242,4 +254,5 @@ export default {
   getUserContributions,
   addInstructorRecommendations,
   getPersonalizeInstructorRecommendations,
+  getInstructorRecommendations,
 };

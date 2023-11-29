@@ -156,6 +156,17 @@ const getPersonalizeInstructorRecommendations = async (req: Request, res: Respon
     }
 }
 
+const getInstructorRecommendations = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getInstructorRecommendations();
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Getting instructor recommendations error at controller: ');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
 export default {
   registerUser,
   loginUser,
@@ -168,4 +179,5 @@ export default {
   getUserContributions,
   addInstructorRecommendations,
   getPersonalizeInstructorRecommendations,
+  getInstructorRecommendations,
 };
