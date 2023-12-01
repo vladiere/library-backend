@@ -16,6 +16,7 @@ import circulationRoute from "./routes/circulation.route";
 import notificationsRoute from "./routes/notifications.route";
 import transactionRoute from "./routes/transaction.route";
 import allRoute from "./routes/all.route";
+import recoveryRoute from './routes/recovery.route';
 import { Server as HttpServer } from "http";
 
 const app: Express = express();
@@ -67,6 +68,7 @@ app.use("/api/", circulationRoute);
 app.use("/api/", notificationsRoute);
 app.use("/api/", transactionRoute);
 app.use("/api/", allRoute);
+app.use("/api/", recoveryRoute);
 
 // Error Handling
 app.use((req, res, next) => {

@@ -13,6 +13,26 @@ const getAllContributorsBooks = async () => {
     }
 }
 
+const getDashboard = async () => {
+  try {
+    const result: any = await executeQuery('CALL ReportsDashboard()');
+    return {
+      total_fine_fees: result[0][0],
+      total_active: result[1][0],
+      department_online: result[2],
+      new_register: result[3][0],
+      trend_books: result[4],
+      busy_book_borrowed: result[5],
+      trend_books_for_user: result[6],
+    };
+  } catch (error) {
+    logger.error('Getting dashboar error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
 export default {
-    getAllContributorsBooks,
+  getAllContributorsBooks,
+  getDashboard,
 }

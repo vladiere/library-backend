@@ -6,6 +6,7 @@ import logger from "../config/logger";
 // Middleware for verifying JWT token
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
+  
 
   if (!authHeader) {
     logger.warn("Unauthorized: No Token Provided");

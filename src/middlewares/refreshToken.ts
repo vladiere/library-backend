@@ -14,8 +14,16 @@ const refreshUserTokens = async (req: Request, res: Response) => {
   }
 
   const resultQuery: any = await executeQuery(
-    `SELECT COUNT(*) AS found_one FROM refresh_token WHERE refresh_token = '${refreshToken}' LIMIT 1;`,
+    `SELECT created_at, COUNT(*) AS found_one FROM refresh_token WHERE refresh_token = '${refreshToken}' ORDER BY created_at ASC LIMIT 1;`,
   );
+
+  const created_at = new Date(resultQuery[0].created_at)
+  const currentDate = new Date();
+  const timeDiffInDays = (currentDate.getTime() - created_at.getTime()) / (1000 * 60 * 60 * 24)
+
+  if(timeDiffInDays >= 1) {
+    return res.status(401).json({ message: 'Unauthorized access' });
+  }
 
   if (resultQuery[0].found_one === 0) {
     return res.status(404).json({
@@ -23,18 +31,15 @@ const refreshUserTokens = async (req: Request, res: Response) => {
     });
   }
 
-  jwt.verify(
-    refreshToken,
-    config.server.token.refreshSecret,
-    (err: any, decoded: any) => {
+  jwt.verify( refreshToken, config.server.token.refreshSecret, (err: any, decoded: any) => {
       err && logger.error(err.message);
 
       req.body.user = decoded; // Attach user data to the request for later use
-
+      console.log(decoded);
       // Create the access token
       jwt.sign(
         {
-          username: decoded.username,
+          username: decoded?.username ,
           user_id: decoded.user_id,
           privilege: decoded.privilege,
         },

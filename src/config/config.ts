@@ -21,7 +21,10 @@ const SERVER_ACCESS_TOKEN_EXPIRETIME = process.env.SERVER_ACCESS_TOKEN_EXPIRETIM
 const SERVER_REFRESH_TOKEN_EXPIRETIME = process.env.SERVER_REFRESH_TOKEN_EXPIRETIME || "10800s";
 const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || "MIT";
 const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY || "cpcEncryptedSecretKey";
-const SERVER_REFRESH_SECRET_KEY = process.env.SERVER_REFRESH_SECRET_KEY || "CPClibraryRefreshSecretKey";
+const SERVER_REFRESH_SECRET_KEY = process.env.SERVER_REFRESH_SECRET_KEY || "cpcEncryptedSecretKey";
+
+const SERVER_RESET_SECRET_KEY = process.env.SERVER_RESET_SECRET_KEY || 'cpcEncryptedSecretKey';
+const SERVER_RESET_EXPIRETIME = process.env.SERVER_RESET_EXPIRETIME || '30m';
 
 const MYSQL_URL = `mysql://${MYSQL_USER}:${MYSQL_PASS}@${MYSQL_HOST}:${SERVER_PORT}/${MYSQL_DATABASE}`
 
@@ -34,6 +37,8 @@ const SERVER = {
     issuer: SERVER_TOKEN_ISSUER,
     accessSecret: SERVER_SECRET_KEY,
     refreshSecret: SERVER_REFRESH_SECRET_KEY,
+    resetAccessSecret: SERVER_RESET_SECRET_KEY,
+    resetTokenExpireTime: SERVER_RESET_EXPIRETIME,
   },
 };
 

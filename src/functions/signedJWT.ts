@@ -6,11 +6,7 @@ import { executeQuery } from "./executeQuery";
 
 const signedJWT = (
   user: any,
-  callback: (
-    error: Error | null,
-    accessToken: string | null,
-    refreshToken: string | null,
-  ) => void,
+  callback: ( error: Error | null, accessToken: string | null, refreshToken: string | null,) => void,
 ): void => {
   logger.info(`Attempting to sign tokens for ${user[0].username || user[0].email_address}`);
 
@@ -37,7 +33,7 @@ const signedJWT = (
             {
               username: user[0].username || user[0].email_address,
               user_id: user[0].librarian_id || user[0].user_id,
-              privilege: user[0]?.privilege,
+              privilege: user[0]?.privilege || user[0]?.role,
             },
             config.server.token.refreshSecret,
             {
