@@ -22,6 +22,17 @@ import { Server as HttpServer } from "http";
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 const httpServer = new HttpServer(app);
+const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300'];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed origin'));
+    }
+  }
+}
 
 // Logging
 app.use(morgan("dev"));
@@ -32,24 +43,24 @@ app.use(express.urlencoded({ extended: false }));
 // Takes care of json data
 app.use(express.json({ limit: "100mb" })); // Setting the data size of an json
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 // Setting the cors policy
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-  );
-  // Setting the cors method headers
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, GET, PATCH, DELETE, POST");
-    return res.status(200).json({});
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://cpclibrary.online, http://localhost:9300");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+//   );
+//   // Setting the cors method headers
+//   if (req.method === "OPTIONS") {
+//     res.header("Access-Control-Allow-Methods", "PUT, GET, PATCH, DELETE, POST");
+//     return res.status(200).json({});
+//   }
+//   next();
+// });
 
 // Default route
 app.get('/', (req, res) => {

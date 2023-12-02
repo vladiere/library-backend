@@ -6,7 +6,7 @@ dotenv.config();
 const MYSQL_HOST = process.env.MYSQLHOST || "localhost";
 const MYSQL_USER = process.env.MYSQLUSER || "root";
 const MYSQL_PASS = process.env.MYSQLPASSWORD || "31N$t31n";
-const MYSQL_DATABASE = process.env.MYSQLDATABASE || "cpclibrary";
+const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "cpclibrary";
 
 const MYSQL = {
   host: MYSQL_HOST,
