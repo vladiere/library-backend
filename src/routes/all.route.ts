@@ -6,5 +6,6 @@ const router = Router();
 
 router.get('/contributorsbooks/all', verifyToken, allController.getAllContributorsBooks);
 router.get('/dashboard', verifyToken, allController.getDashboard);
+router.get('/stats', verifyToken, allController.getStats);
 
 export default router;

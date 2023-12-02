@@ -25,7 +25,19 @@ const getDashboard = async (req: Request, res: Response) => {
   }
 }
 
+const getStats = async (req: Request, res: Response) => {
+  try {
+    const result = await allService.getStats();
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Getting all stats error at controller: ');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
 export default {
   getAllContributorsBooks,
   getDashboard,
+  getStats,
 }

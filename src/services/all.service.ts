@@ -32,7 +32,26 @@ const getDashboard = async () => {
   }
 }
 
+const getStats = async () => {
+  try {
+    const query = "CALL GetTransactionBookStats()";
+
+    const result: any = await executeQuery(query);
+    console.log(result);
+    return {
+      transaction_book: result[0],
+      online_department: result[1],
+      fines_fees: result[2],
+    };
+  } catch (error) {
+    logger.error('Getting all stats error at service: ');
+    console.error(error)
+    return error;
+  }
+}
+
 export default {
   getAllContributorsBooks,
   getDashboard,
+  getStats
 }
