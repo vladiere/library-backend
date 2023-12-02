@@ -25,7 +25,7 @@ const httpServer = new HttpServer(app);
 const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300'];
 
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: (origin: any, callback: any) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
