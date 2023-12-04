@@ -22,7 +22,7 @@ import { Server as HttpServer } from "http";
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 const httpServer = new HttpServer(app);
-const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300'];
+const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300', 'http://localhost:9000', 'http://localhost:9200'];
 
 const corsOptions = {
   origin: (origin: any, callback: any) => {

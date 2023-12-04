@@ -16,8 +16,8 @@ const getBookTransactions = async (req: Request, res: Response) => {
 
 const checkedOutReturn = async (req: Request, res: Response) => {
   try {
-    const { transaction_id, transaction_type, transaction_status } = req.body;
-    const result = await transactionService.checkedOutReturn(transaction_id, transaction_type, transaction_status);
+    const { transaction_id, transaction_type, transaction_status, fee } = req.body;
+    const result = await transactionService.checkedOutReturn(transaction_id, transaction_type, transaction_status, fee);
     return res.status(200).json(result);
   } catch (error: any) {
     logger.error("Check out and return error at controller");

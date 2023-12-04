@@ -44,13 +44,15 @@ const checkedOutReturn = async (
   transaction_id: number,
   transaction_type: string,
   transaction_status: string,
+  fee: string,
 ) => {
   try {
-    const query = "CALL CheckedOutReturnBook(?,?,?);";
+    const query = "CALL CheckedOutReturnBook(?,?,?,?);";
     const result: any = await executeQuery(query, [
       transaction_id,
       transaction_type,
       transaction_status,
+      fee
     ]);
     return result[0][0];
   } catch (error: any) {
