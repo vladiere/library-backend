@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY tsconfig.json ./
-COPY . .
+COPY ./src ./src
 CMD [ "npm", "run", "start:dev" ]
 
 # Builder stage
