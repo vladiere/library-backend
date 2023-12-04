@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev src/index.ts",
-    "build": "rm -rf dist/ && tsc -b && npm run copy-files",
-    "start": "npm run build && npm run copy-files && node dist/src/index.js",
+    "build": "rm -rf dist/ && tsc -b",
+    "start": "npm run build && npm run copy-files",
+    "start:test": "npm run build && npm run copy-files && node dist/src/index.js",
     "copy-files": "ts-node scripts/copyFiles.ts"
   },
   "repository": {
