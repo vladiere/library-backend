@@ -1,10 +1,10 @@
 # Development stage
-FROM node:16 as development
+FROM node:18 as development
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY tsconfig.json ./
-COPY ./src ./src
+COPY . .
 CMD [ "npm", "run", "start:dev" ]
 
 # Builder stage
@@ -21,5 +21,5 @@ RUN npm ci --only=production
 FROM alpine:latest as production
 RUN apk --no-cache add nodejs ca-certificates
 WORKDIR /root/
-COPY --from=builder /usr/src/app ./
+COPY --from=builder /usr/src/app/dist ./dist
 CMD [ "node", "dist/src" ]
