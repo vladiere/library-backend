@@ -1,5 +1,5 @@
 # Development stage
-FROM node:18 as development
+FROM node:16 as development
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
@@ -21,5 +21,5 @@ RUN npm ci --only=production
 FROM alpine:latest as production
 RUN apk --no-cache add nodejs ca-certificates
 WORKDIR /root/
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app ./
 CMD [ "node", "dist/src" ]
