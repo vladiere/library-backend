@@ -1,6 +1,6 @@
 import logger from "../config/logger";
-import ILibrarian from "../models/userModel";
 import { executeQuery } from "../functions/executeQuery";
+import ILibrarian from "../models/userModel";
 
 const getAllLibrarian = async (id: number, option: string) => {
   try {

@@ -36,8 +36,20 @@ const getStats = async (req: Request, res: Response) => {
   }
 }
 
+const getHolds = async (req: Request, res: Response) => {
+  try {
+    const result = await allService.getHolds();
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Getting holds error at controller: ');
+    console.error(error);
+    return res.status(500).json(error);
+  }
+}
+
 export default {
   getAllContributorsBooks,
   getDashboard,
   getStats,
+  getHolds,
 }

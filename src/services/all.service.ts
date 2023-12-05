@@ -50,8 +50,22 @@ const getStats = async () => {
   }
 }
 
+const getHolds = async() => {
+  try {
+    const query = "SELECT * FROM holds_details";
+    const result: any = await executeQuery(query);
+    console.log(result);
+    return result;
+  } catch (error) {
+    logger.error('Getting hold records error at service: ');
+    console.error(error);
+    return error;
+  }
+}
+
 export default {
   getAllContributorsBooks,
   getDashboard,
-  getStats
+  getStats,
+  getHolds,
 }
