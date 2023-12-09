@@ -158,7 +158,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
           return res
             .status(200)
             .json({ status: 200, valueFromDepartmentToIdNumber });  
-        } else if (role.toUpperCase() === 'INSTRUCTOR') {
+        } else if (role.toUpperCase() === 'INSTRUCTOR' || 'FACULTY STAFF') {
           filteredArray.sort((a: string, b: string) => sortOrder(a) - sortOrder(b));
           filteredArray.splice(roleIndex,1);
           return res
