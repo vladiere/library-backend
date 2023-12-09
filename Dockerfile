@@ -23,5 +23,5 @@ FROM alpine:latest as production
 RUN apk --no-cache add nodejs ca-certificates
 WORKDIR /root/
 COPY --from=builder /usr/src/app ./
-COPY ./src/public ./dist/src/public 
+COPY ./src/public ./dist/src 
 CMD [ "node", "dist/src" ]
