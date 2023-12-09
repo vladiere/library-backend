@@ -20,7 +20,7 @@ RUN npm ci --only=production
 # Production stage
 FROM alpine:latest as production
 RUN apk --no-cache add nodejs ca-certificates
-WORKDIR /usr/src/app   # Changed the working directory to match the development stage
-COPY --from=builder /usr/src/app/dist ./  # Adjusted the path to match the build output
+WORKDIR /usr/src/app  
+COPY --from=builder /usr/src/app/dist ./ 
 COPY ./src/public ./src/public
 CMD [ "node", "dist/src" ]
