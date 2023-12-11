@@ -132,7 +132,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       const indexDepartment = filteredArray.indexOf(
         departments && departments[departments.length - 1],
       );
-      const roleIndex = filteredArray.indexOf(role.toUpperCase());
+      const roleIndex = filteredArray.indexOf('INSTRUCTOR');
       const valueFromDepartmentToIdNumber = filteredArray.slice(
         indexDepartment,
         indexIdNumber,
@@ -151,7 +151,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
         (a: any, b: any) => sortOrder(a) - sortOrder(b),
       );
       if (roleIndex !== -1) {
-
+        console.log(role);
         if (role.toUpperCase() === 'STUDENT') { 
           const studentIndex = valueFromDepartmentToIdNumber.indexOf(role.toUpperCase())
           valueFromDepartmentToIdNumber.splice(studentIndex,1);
