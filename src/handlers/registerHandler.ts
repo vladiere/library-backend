@@ -132,7 +132,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       const indexDepartment = filteredArray.indexOf(
         departments && departments[departments.length - 1],
       );
-      const roleIndex = filteredArray.indexOf('INSTRUCTOR');
+      const roleIndex = filteredArray.indexOf(role.toUpperCase());
       const valueFromDepartmentToIdNumber = filteredArray.slice(
         indexDepartment,
         indexIdNumber,
