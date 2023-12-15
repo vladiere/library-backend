@@ -56,9 +56,22 @@ const manageUserContribution = async (req: Request, res: Response) => {
   }
 }
 
+const calculateFinesFees = async (req: Request, res: Response) => {
+  try {
+    const result = await librarianService.calculateFinesFees();
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error('Calculate fines and fees error at controller: ');
+    console.error(error);
+    return res.status(500).json(error);
+    
+  }
+}
+
 export default {
   getLibrarianData,
   updateLibrarianInfo,
   getAllUserContributions,
   manageUserContribution,
+  calculateFinesFees,
 };

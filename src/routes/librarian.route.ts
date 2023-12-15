@@ -23,5 +23,10 @@ router.post(
   "/contributors/manage",
   verifyToken,
   librarianController.manageUserContribution
+);
+router.get(
+  "/get/finesfees",
+  verifyToken,
+  librarianController.calculateFinesFees,
 )
 export default router;

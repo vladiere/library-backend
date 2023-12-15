@@ -66,11 +66,22 @@ const manageUserContribution = async (action: string, user_id: number, p_status:
   }
 }
 
-
+const calculateFinesFees = async () => {
+  try {
+    const query = "CAll CalculateAndApplyFines()";
+    const result = await executeQuery(query);
+    return { message: 'Calculated fines and fees' };
+  } catch (error) {
+    logger.error('Getting fines and fees error at service: ');
+    console.error(error);
+    return error;
+  }
+}
 
 export default {
   getAllLibrarian,
   updateLibrarianInfo,
   getAllUserContributions,
   manageUserContribution,
+  calculateFinesFees,
 };
