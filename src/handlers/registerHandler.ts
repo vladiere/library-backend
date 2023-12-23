@@ -48,12 +48,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       const departmentRegex = /(BSIT|BEED|BSHM|BSED|BSED-ENG|BSED-FIL|BSED-SCI|IT|EDUCATION|HM)\b/g; // Matches department codes
 
       // Define words and phrases to remove
-      const wordsAndPhrasesToRemoveFromText = [
-        "REPUBLIC OF THE PHILIPPINES",
-        "MUNICIPALITY OF CORDOVA",
-        "CORDOVA PUBLIC COLLEGE",
-        "ID NUMBER",
-      ];
+      const wordsAndPhrasesToRemoveFromText = [ "REPUBLIC OF THE PHILIPPINES", "MUNICIPALITY OF CORDOVA", "CORDOVA PUBLIC COLLEGE", "ID NUMBER", ];
 
       // Filter out words and phrases to remove
       const filteredName = nameMatches?.filter(
@@ -75,41 +70,7 @@ const handleImagesComparison = async (req: Request, res: Response) => {
       const departments = text.match(departmentRegex);
 
       // Define the words and phrases to remove
-      const wordsAndPhrasesToRemove = [
-        "REPUBLIC",
-        "OF",
-        "THE",
-        "PHILIPPINES",
-        "CORDOVA",
-        "PUBLIC",
-        "COLLEGE",
-        "MUNICIPALITY",
-        "PUB",
-        "LIC",
-        "GABL",
-        "CORDGVA",
-        "CEBU",
-        "6170",
-        "COL",
-        "LEGE",
-        "NAME",
-        "STUDENT NAME",
-        "ID",
-        "ID NUMBER",
-        "ENG",
-        "SCI",
-        "SCIENCE",
-        "FIL",
-        "FILIPINO",
-        "BER",
-        "ID",
-        "NUMBER",
-        "SIGNATURE",
-        "DEPARTMENT",
-        "FOUNDED",
-        "2005",
-        "2008",
-      ];
+      const wordsAndPhrasesToRemove = [ "REPUBLIC", "OF", "THE", "PHILIPPINES", "CORDOVA", "PUBLIC", "COLLEGE", "MUNICIPALITY", "PUB", "LIC", "GABL", "CORDGVA", "CEBU", "6170", "COL", "LEGE", "NAME", "STUDENT NAME", "ID", "ID NUMBER", "ENG", "SCI", "SCIENCE", "FIL", "FILIPINO", "BER", "ID", "NUMBER", "SIGNATURE", "DEPARTMENT", "FOUNDED", "2005", "2008", ];
 
       // Filter out the words and phrases to remove
       const filteredMatches = matches?.filter(
@@ -151,7 +112,6 @@ const handleImagesComparison = async (req: Request, res: Response) => {
         (a: any, b: any) => sortOrder(a) - sortOrder(b),
       );
       if (roleIndex !== -1) {
-        console.log(role);
         if (role.toUpperCase() === 'STUDENT') { 
           const studentIndex = valueFromDepartmentToIdNumber.indexOf(role.toUpperCase())
           valueFromDepartmentToIdNumber.splice(studentIndex,1);
