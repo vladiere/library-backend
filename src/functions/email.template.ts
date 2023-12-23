@@ -5,11 +5,11 @@ const clientUrl = 'https://cpclibrary.online/auth?reset=';
 
 const createTransporter = () => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.elasticemail.com",
-    port: 2525,
+    host: "smtp.gmail.com",
+    port: 587,
     auth: {
-      user: 'ruthakaza@gmail.com',
-      pass: '7DFD0F64A8C3BCE58F3158FF8F129B26E092'
+      user: 'team.cpc.library@gmail.com',
+      pass: 'nusbfkdyrjbdkfat '
     },
     tls: {
       ciphers: 'SSLv3'
@@ -25,7 +25,7 @@ export const emailTemplate = async (auth_token: string, email_to: string) => {
     const transporter = createTransporter();
 
     const info = await transporter.sendMail({
-      from: "fynedaemi@gmail.com",
+      from: "team.cpc.library@gmail.com",
       to: `${email_to}`,
       subject: "Password Reset Request",
       text: "Password reset request please click the link",
