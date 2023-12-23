@@ -8,8 +8,8 @@ const createTransporter = () => {
     host: "smtp.elasticemail.com",
     port: 2525,
     auth: {
-      user: 'cpc@library.com',
-      pass: '5F0E2BC1D05359C801AD0309DF1765A65532'
+      user: 'ruthakaza@gmail.com',
+      pass: '7DFD0F64A8C3BCE58F3158FF8F129B26E092'
     },
     tls: {
       ciphers: 'SSLv3'
